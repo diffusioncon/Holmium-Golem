@@ -50,3 +50,11 @@ sudo apt install libsnappy-dev
 pip3 install dist/golem-0.21.0+dev130.g4d9cf8b-cp36-cp36m-linux_x86_64.whl
 ```
 
+## Testing
+
+```bash
+pip3 install fs opencv-python
+golemapp --accept-all-terms
+```
+
+
