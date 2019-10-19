@@ -1,0 +1,12 @@
+[submodule "ThirdParty/golem-smart-contracts-interface"]
+	path = ThirdParty/golem-smart-contracts-interface
+	url = https://github.com/golemfactory/golem-smart-contracts-interface.git
+[submodule "ThirdParty/golem"]
+	path = ThirdParty/golem
+	url = https://github.com/dmikushin/golem.git
+[submodule "ThirdParty/golem-messages"]
+	path = ThirdParty/golem-messages
+	url = https://github.com/golemfactory/golem-messages.git
+[submodule "ThirdParty/golem-task-api"]
+	path = ThirdParty/golem-task-api
+	url = https://github.com/golemfactory/task-api.git
