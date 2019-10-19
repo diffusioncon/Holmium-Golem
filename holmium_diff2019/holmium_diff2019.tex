@@ -1,0 +1,95 @@
+% Dmitry Mikushin, Applied Parallel Computing LLC, dmitry@parallel-computing.pro
+
+\documentclass[aspectratio=169]{beamer}
+
+\usetheme{holmium}
+
+\usepackage{comment}
+\usepackage{caption}
+\renewcommand\lstlistingname{}
+\usepackage{setspace}
+
+% Define styles for balloons, lines & shadows
+\tikzstyle{line}      = [draw, rounded corners=3pt, -latex]
+\tikzstyle{balloon}   = [draw, fill=blue!20, opacity=0.4, inner sep=2pt, rounded corners=2pt]
+\tikzstyle{comment}   = [draw, fill=blue!70, text=white, text width=4cm, minimum height=1cm, rounded corners, align=left, font=\scriptsize]
+%\tikzstyle{apcshadow} = [blur shadow={shadow blur steps=4},shadow xshift=1.5,shadow yshift=-1.5]
+\tikzstyle{gpubox} = [draw=apcblue,fill=apccyan,minimum height=1.9cm,outer sep=0,text depth=-1.5cm]
+
+\usetikzlibrary{fit,calc,matrix,shadows,shadows.blur,shapes.arrows}
+
+% Command to place a TikZ anchor at the current position
+\newcommand{\tikzmark}[1]{%
+  \tikz[overlay,remember picture,baseline] \coordinate (#1) at (0,0) {};}
+
+% Command to draw a balloon over two anchors
+\newcommand<>{\balloon}[3][balloon]{%
+  \coordinate (c) at ($(#2)+(0,0.75ex)$);
+  \node#4 (#1) [balloon, fit=(#3) (c)] {};}
+
+\title[Holmium: Golem for Trusted Self-Improving Cloud Compute]{\uppercase{Holmium}}
+\subtitle{Golem for Trusted Self-Improving Cloud Compute}
+\author{Dmitry Mikushin}
+\institute[Diffusion 2019]{}
+\date{October 20, 2019}
+
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Trust \& Self-Improvement}
+
+\begin{minipage}{0.4cm}
+\hskip0.25cm
+\end{minipage}%
+\begin{minipage}{5cm}
+\includegraphics[width=5cm]{figures/self_improvement}
+\end{minipage}%
+\begin{minipage}{0.25cm}
+\hskip0.25cm
+\end{minipage}%
+\begin{minipage}{9cm}
+\begin{itemize}
+\item No excessive sandboxing or isolation: run the provided job binary directly
+\item Deploy on a variety of providers, depending on the actual spot market situation
+\item Optionally include means for providers to optimize the job and their resources:
+\begin{itemize}
+\item[-] Job source code
+\item[-] Guranteed amount of \emph{similar} (with a minor patchset) payload to be purchased
+\end{itemize}
+\end{itemize}
+\end{minipage}%
+
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Economical chain}
+
+\begin{minipage}{0.4cm}
+\hskip0.25cm
+\end{minipage}%
+\begin{minipage}{9cm}
+\begin{itemize}
+\item Provider may resell the job he optimized to the same network for better price
+\item Provider may subcontract partial optimization to the network as smaller jobs
+\end{itemize}
+\end{minipage}%
+\begin{minipage}{0.25cm}
+\hskip0.25cm
+\end{minipage}%
+\begin{minipage}{5cm}
+\includegraphics[width=5cm]{figures/resell}
+\end{minipage}%
+
+\end{frame}
+
+
+
+\end{document}
+

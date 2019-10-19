@@ -1,0 +1,176 @@
+% Dmitry Mikushin, USI Lugano, dmitry.mikushin@usi.ch,
+% using portions of original style file by Tom Cashman
+
+\DeclareOptionBeamer{compress}{\beamer@compresstrue}
+\ProcessOptionsBeamer
+
+\mode<presentation>
+
+\RequirePackage{tikz}
+\RequirePackage{lmodern}
+\RequirePackage{listingsutf8}
+\RequirePackage{xcolor}
+\def\newXeTeXintercharclass#1{} %hack to fool polyglossia
+\RequirePackage{polyglossia}
+\RequirePackage{fontspec}
+
+\setbeamerfont{block title}{size={}}
+\setbeamerfont{date}{size=\scriptsize}
+
+\definecolor{apc@black}{RGB}{35, 31, 32}
+\definecolor{apc@blue}{RGB}{58,49,111}
+\definecolor{apc@gray}{RGB}{230,230,230}
+\definecolor{apc@cyan}{RGB}{202,233,249}
+\definecolor{apc@lightblue}{RGB}{58,49,111}
+\definecolor{darkgreen}{RGB}{25,136,25}
+\definecolor{darkyellow}{RGB}{220,207,0}
+
+\hypersetup{colorlinks=true,linkcolor=apc@blue,urlcolor=apc@blue}
+
+\defaultfontfeatures{Scale=MatchLowercase, Mapping=tex-text}
+
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{shadows}
+
+\setsansfont{PT Sans}
+\setmonofont{PT Mono}
+
+\lstset{
+    inputencoding=utf8,
+%    backgroundcolor=\color{white},
+    tabsize=4,
+    rulecolor=,
+    upquote=true,
+%    aboveskip={1.5\baselineskip},
+    columns=fixed,
+    showstringspaces=false,
+    extendedchars=true,
+    breaklines=true,
+    prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+    frame=single,
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false,
+    basicstyle=\scriptsize\ttfamily,
+    identifierstyle=\ttfamily,
+    keywordstyle=\ttfamily\color[rgb]{0,0,1},
+    commentstyle=\ttfamily\color[rgb]{0.133,0.545,0.133},
+    stringstyle=\ttfamily\color[rgb]{0.627,0.126,0.941},
+}
+
+\lstdefinelanguage{cuda}{
+    language=C++,
+    keywords=[2]{__global__, __shared__, __syncthreads},
+    keywordstyle={[2]\ttfamily\bfseries\color{darkgreen}},
+}
+
+\makeatletter
+\newenvironment{btHighlight}[1][]
+{\begingroup\tikzset{bt@Highlight@par/.style={#1}}\begin{lrbox}{\@tempboxa}}
+{\end{lrbox}\bt@HL@box[bt@Highlight@par]{\@tempboxa}\endgroup}
+
+\newcommand\btHL[1][]{%
+  \begin{btHighlight}[#1]\bgroup\aftergroup\bt@HL@endenv%
+}
+\def\bt@HL@endenv{%
+  \end{btHighlight}%   
+  \egroup
+}
+\newcommand{\bt@HL@box}[2][]{%
+  \tikz[#1]{%
+    \pgfpathrectangle{\pgfpoint{1pt}{0pt}}{\pgfpoint{\wd #2}{\ht #2}}%
+    \pgfusepath{use as bounding box}%
+    \node[anchor=base west, fill=apc@lightblue,outer sep=0pt,inner xsep=1pt, inner ysep=0pt, rounded corners=3pt, minimum height=\ht\strutbox+1pt,#1]{\raisebox{1pt}{\strut}\strut\usebox{#2}};
+  }%
+}
+\makeatother
+
+\lstdefinestyle{markable}{
+    % Ugly hardcoded font size here!
+    % Otherwise, highlighted and plain are not the same!
+    basicstyle=\footnotesize\ttfamily,
+    moredelim=**[is][\btHL]{`}{`},
+}
+
+\setbeamertemplate{sidebar right}{}
+
+\setlength{\fboxsep}{0pt}
+
+\setbeamertemplate{title page}
+{
+  \begin{tikzpicture}[remember picture,overlay]
+    \node [xshift=0cm,yshift=0cm] at (current page.center)
+    {\includegraphics[width=\paperwidth,height=\paperheight]{figures/title_background}};
+    \node[xshift=1cm,yshift=-1.8cm] at (current page.north west) [anchor=north west]
+    {\includegraphics[height=5cm,keepaspectratio]{figures/holmium_logo}};
+    \node[inner sep=5pt] at (current page.north east) [anchor=north east]
+    {\includegraphics[height=1cm,keepaspectratio]{figures/diffusion_logo}};
+    \node[xshift=6cm,yshift=-3.2cm] at (current page.north west) [anchor=north west]
+    {\usebeamerfont{title}\Huge\usebeamercolor[fg]{title}\inserttitle};
+    \node[xshift=6cm,yshift=-4.4cm] at (current page.north west) [anchor=north west]
+    {\usebeamerfont{title}\textcolor{white}{\insertsubtitle}};
+    \node[xshift=6cm,yshift=-5.4cm] at (current page.north west) [anchor=north west]
+    {\usebeamerfont{author}\textcolor{white}{\insertauthor\quad|\quad\insertdate}};
+  \end{tikzpicture}% 
+  \vfill 
+}
+
+\setbeamertemplate{frametitle}
+{%
+%  \leavevmode%
+  \vskip-5pt
+  \hbox{%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=3ex,dp=1.2ex,left,leftskip=10pt]{frametitle}%
+    \insertframetitle
+  \end{beamercolorbox}}%
+%  \begin{tikzpicture}[remember picture,overlay] 
+%    \node[inner sep=5pt,outer sep=0pt] at (current page.north west) [anchor=north west]
+%    {\includegraphics[height=1.4cm,keepaspectratio]{figures/apc_logo}};    
+%    \node[inner sep=20pt,outer sep=0pt,xshift=1cm,yshift=0.1cm] at (current page.north west) [anchor=north west]
+%    {\insertframetitle\strut\par};                  
+%  \end{tikzpicture}%
+}
+
+\useoutertheme{infolines}
+%\useoutertheme{split}
+\useinnertheme{rectangles}
+\setbeamertemplate{headline}{} % removes the headline that infolines inserts
+
+\usecolortheme{whale}
+%\usecolortheme{orchid}
+
+\setbeamercolor{author in head/foot}{bg=apc@black,fg=white}
+\setbeamercolor{title in head/foot}{bg=apc@blue,fg=apc@black}
+\setbeamercolor{date in head/foot}{bg=apc@black,fg=white}
+\setbeamercolor{title}{bg={},fg=white}
+\setbeamercolor{institute}{fg=white}
+\setbeamercolor{frametitle}{bg=apc@blue,fg=white}
+\setbeamercolor{author}{fg=white}
+\setbeamercolor{date}{fg=white}
+\setbeamercolor{item}{fg=apc@black}
+\setbeamercolor{normal text}{fg=apc@black}
+\setbeamercolor{math text}{fg=apc@black}
+
+\makeatletter
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.3333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor~~\beamer@ifempty{\insertshortinstitute}{}{(\insertshortinstitute)}
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.3333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\textcolor{white}{\let\hyperlink\@secondoftwo\insertshorttitle}
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.2333333\paperwidth,ht=2.25ex,dp=1ex,center]{date in head/foot}%
+    \hskip.1\paperwidth\usebeamerfont{date in head/foot}\insertshortdate{}
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+    {\insertframenumber{} / \inserttotalframenumber}\hspace*{2ex} 
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+\makeatother
+
+\mode
+<all>
