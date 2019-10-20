@@ -47,14 +47,33 @@ pip3 install setuptools_rust appdirs psutil python-dateutil docker enforce peewe
 sudo apt install rustc
 python3 ./setup.py bdist_wheel
 sudo apt install libsnappy-dev
-pip3 install dist/golem-0.21.0+dev130.g4d9cf8b-cp36-cp36m-linux_x86_64.whl
+pip3 install golem-0.21.0+dev133.gd6761c4-cp36-cp36m-linux_x86_64.whl
 ```
 
 ## Testing
 
+Prepare some additional dependencies and Docker:
+
 ```bash
-pip3 install fs opencv-python
-golemapp --accept-all-terms
+pip3 install fs opencv-python cloudpickle
+sudo apt-get remove docker docker-engine docker.io
+sudo apt install docker.io
+sudo systemctl start docker
+sudo systemctl enable docker
 ```
 
+Moreover, NVIDIA GPU kernel module is needed for GPU support. Driver version 418.39 from CUDA 10.1 will do.
+
+Create an empty task archive to silence error:
+
+```
+mkdir -p ~/.local/share/golem/default/rinkeby
+touch ~/.local/share/golem/default/rinkeby/task_archive.pickle
+```
+
+Finally, execute `golemapp` with `sudo`, otherwise it cannot access Docker:
+
+```
+sudo $(which python) $(which golemapp) --accept-all-terms --password simplepassword
+```
 
