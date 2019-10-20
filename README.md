@@ -47,7 +47,7 @@ pip3 install setuptools_rust appdirs psutil python-dateutil docker enforce peewe
 sudo apt install rustc
 python3 ./setup.py bdist_wheel
 sudo apt install libsnappy-dev
-pip3 install golem-0.21.0+dev133.gd6761c4-cp36-cp36m-linux_x86_64.whl
+pip3 install golem-0.21.0+dev134.g631d85a-cp36-cp36m-linux_x86_64.whl
 ```
 
 ## Testing
